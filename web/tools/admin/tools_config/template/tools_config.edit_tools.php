@@ -86,7 +86,7 @@ $permissions=array();
 					print '<tr> <td class=\'sectionTitle\'><b>'.$params['title'].'</b></td></tr>';
 				break;
 			default:
-				form_generate_input_text($params['name'], $current_tip, $module, $opt, get_settings_value($module, $box_id), 10, $params['validation_regex']);
+				form_generate_input_text($params['name'], $current_tip, $module, $opt, get_settings_value($module, $box_id), 60, $params['validation_regex']);
 		}
 		if ($params['example']) {
 			print_example($params['example'], $params['name'], $module);
