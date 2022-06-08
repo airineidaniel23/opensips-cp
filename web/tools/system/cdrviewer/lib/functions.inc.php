@@ -191,7 +191,7 @@ function cdr_export($start_time,  $end_time ) {
 
 }
 
-function cdr_put_to_download($start_time , $end_time , $sql_search , $outfile){
+function cdr_put_to_download($start_time , $end_time , $sql_search , $cdr_field, $search_regexp, $outfile){
 
 	global $config ;
 	global $export_csv;
@@ -218,8 +218,12 @@ function cdr_put_to_download($start_time , $end_time , $sql_search , $outfile){
 		array_push( $sql_vals, $end_time);
 	}
 
+	if ($sql_search!="") {
+		$sql.=  $sql_search;
+		array_push( $sql_vals, $cdr_field);
+		array_push( $sql_vals, $search_regexp);
+	}
 
-	if ($sql_search!="") $sql.=  $sql_search  ;
 	if ($config->db_driver == "mysql")
 		$link->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 	if (isset($cdr_export_time_limit))
@@ -306,9 +310,10 @@ function cdr_put_to_download($start_time , $end_time , $sql_search , $outfile){
 	echo $content_file;
 
 
-
-	if ( unlink ($outfile) === false )
-	die("cannot remove temp file ");
+	if (file_exists($outfile)) {
+		if ( unlink ($outfile) === false )
+		die("cannot remove temp file ");
+	}
 }
 
 ?>

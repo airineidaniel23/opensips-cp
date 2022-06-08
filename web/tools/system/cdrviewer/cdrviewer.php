@@ -85,7 +85,11 @@ if ($export == "Export") {
 	$cdr_field = $_SESSION['cdrviewer_search_cdr_field'];
 
 
-	if (($cdr_field!="") && ($search_regexp!="")) $sql_search.=" and ".$cdr_field.' like "%'.$search_regexp.'%"' ;
+
+	if (($cdr_field!="") && ($search_regexp!="")) {
+		$search_regexp = "%".$search_regexp."%";
+		$sql_search.=' and ? like ?' ;
+	}
 
 
 	$search_start=$_SESSION['cdrviewer_search_start'];
@@ -96,7 +100,8 @@ if ($export == "Export") {
 			$error = error_get_last();
 			if(null !== $error)
 			{
-				require("../../../../web/common/cfg_comm.php");
+				require_once("../../../../web/common/cfg_comm.php");
+				echo json_encode($error);
 				echo "Not enough resources to export the selected CDRs!<br>";
 				echo "Please use a filter that will return fewer results<br>";
 				echo "If that is not possible, consider increasing your PHP memory allocated and/or execution time<br>";
@@ -104,7 +109,7 @@ if ($export == "Export") {
 				exit();
 			}
 		});
-		cdr_put_to_download($search_start,$search_end,$sql_search,"cdr-temp.csv");
+		cdr_put_to_download($search_start,$search_end,$sql_search,$cdr_field,$search_regexp,"cdr-temp.csv");
 	}
 	exit();
 }
