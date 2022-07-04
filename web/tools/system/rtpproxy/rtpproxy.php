@@ -292,7 +292,7 @@ if (!empty($errors)) {
 	echo "Error stack: ";
 	print_r($errors);
 }
-
+if ($info!="") echo('<tr><td  align="center"><div class="formInfo">'.$info.'</div></td></tr>');
 require("template/footer.php");
 exit();
 

@@ -83,7 +83,7 @@ if ($action=="modify_params")
 				if ($stm->execute( array( $current_tool, $module, $_POST[$module], $current_tool, $module, $_POST[$module])) == false) {
 					$errors= "Updating record in DB failed: ".print_r($stm->errorInfo(), true); 
 				}    else {
-					$info="Admin credentials were modified";
+					$info="Settings were modified";
 				}
 			}
 		} else {
@@ -103,7 +103,7 @@ if ($action=="modify_params")
 				if ($stm->execute( array( $current_tool, $module, $_POST[$module])) == false) {
 					$errors= "Updating record in DB failed: ".print_r($stm->errorInfo(), true); 
 				}    else {
-					$info="Admin credentials were modified";
+					$info="Settings were modified";
 				}
 			}
 		}
@@ -120,4 +120,6 @@ if ($action=="edit_tools")
 	require("template/footer.php");
 	exit();
 }
+if ($errors!="") echo('<tr><td align="center"><div class="formError">'.$errors.'</div></td></tr>');
+if ($info!="") echo('<tr><td  align="center"><div class="formInfo">'.$info.'</div></td></tr>');
 require("template/footer.php");

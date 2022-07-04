@@ -286,6 +286,7 @@ if ($action=="delete")
 require("template/".$page_id.".main.php");
 if($errors)
 echo('!!! ');echo($errors);
+if ($info!="") echo('<tr><td  align="center"><div class="formInfo">'.$info.'</div></td></tr>');
 require("template/footer.php");
 exit();
 
